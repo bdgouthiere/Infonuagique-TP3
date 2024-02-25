@@ -5,16 +5,30 @@
 
 ## Execution du pipelines si le fichier est modifier ou si fichier bicep/infra est modifier
 trigger:
-- main
+  - none
+  ##branches:
+  ##  include:
+  ##    - bicep/infra
+
 
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+variables:
+  serviceConnection: 'az-serviceprincipal'
+  resourceGroupName: 'rg-test-devops'
+  location: 'canadacentral'
+  templateFile: '**/main.bicep'
+  webAppName: 'webapp-dev-3213123'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+steps:
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: $(serviceConnection)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az --version
+      az group create --name $(ressourceGroupName) --location $(location)
+      az deployement group create --resource-group $(ressourceGroupName) --template-file $(templateFile)
+      parameters webAppName=$(webAppName)
