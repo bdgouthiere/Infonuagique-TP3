@@ -15,7 +15,7 @@ stages:
 - stage: 'Dev'
   displayName: 'IAC Dev'
   jobs:
-  - template: pipelines/templates/iac-azure-template-pipelines.yml
+  - template: templates/iac-azure-template-pipelines.yml
     parameters:
       environementIAC: 'dev'
       resourceGroupName: 'rg-test-devops'
