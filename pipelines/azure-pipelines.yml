@@ -19,7 +19,7 @@ variables:
   resourceGroupName: 'rg-test-devops'
   location: 'canadacentral'
   templateFile: '**/main.bicep'
-  webAppName: 'webapp-dev-3213123'
+  webAppName: 'webapp-dev-7845112'
 
 steps:
 - task: AzureCLI@2
