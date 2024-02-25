@@ -1,13 +1,20 @@
 param location string = resourceGroup().location
-param appName string ='azdevops'
-param appSku string ='F1'
+param sku string = 'F1'
 
-module WebApp 'modules/webapp.bicep' =  {
-  name: appName
+var appNames =[
+   'mvc'
+   'postulation'
+   'emplois'
+   'documents'
+   'favoris'
+]
+
+
+module AppServices 'Modules/appService.bicep' =  {
+  name: 'appService'
   params: {
-    serviceplanName : 'SP-${appName}'
+    appNames : appNames
     location: location
-    sku:appSku
-    webAppName: appName
+    sku: sku
   }
 }
