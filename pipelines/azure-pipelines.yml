@@ -43,7 +43,6 @@ stages:
     - job: 'Deployment'
       variables:
         resourceGroupName: 'rg-prod-tp3'
-        webAppName: 'app-prod-recrut-123'
       steps:
       - task: AzureCLI@2
         displayName: 'Environement Prod'
