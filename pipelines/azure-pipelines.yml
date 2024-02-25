@@ -11,15 +11,43 @@ trigger:
     include:
       - bicep
 
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  location: 'canadacentral'
+  templateFile: '**/main.bicep'
+  serviceConnection: 'sc-azure'
+
 stages:
-- stage: 'Dev'
-  displayName: 'IAC Dev'
+- stage: 'IacDev'
   jobs:
-  - template: templates/iac-azure-template-pipelines.yml
-    parameters:
-      environementIAC: 'dev'
-      resourceGroupName: 'rg-test-devops'
-      serviceConnection: 'az-serviceprincipal' 
+    - job: 'Deployment'
+      variables:
+        resourceGroupName: 'rg-dev-tp3'
+        webAppName: 'app-dev-recrut-123'
+      steps:
+      - task: AzureCLI@2
+        displayName: 'Environement Dev'
+        inputs:
+          azureSubscription: $(serviceConnection)
+          scriptType: bash
+          scriptLocation: inlineScript
+          inlineScript: |
+            az --version
+            az group create --name $(resourceGroupName) --location $(location)
+            az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) --parameters appName=$(webAppName)
+
+
+#stages:
+#- stage: 'Dev'
+#  displayName: 'IAC Dev'
+#  jobs:
+#  - template: templates/iac-azure-template-pipelines.yml
+#    parameters:
+#      environementIAC: 'dev'
+#      resourceGroupName: 'rg-test-devops'
+#      serviceConnection: 'az-serviceprincipal' 
 
 #pool:
 #  vmImage: ubuntu-latest
