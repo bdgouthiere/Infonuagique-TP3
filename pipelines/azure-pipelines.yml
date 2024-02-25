@@ -36,7 +36,7 @@ stages:
           inlineScript: |
             az --version
             az group create --name $(resourceGroupName) --location $(location)
-            az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) --parameters location $(location) 
+            az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile)
 #appName=$(webAppName)
 
 #- stage: 'IacProd'
