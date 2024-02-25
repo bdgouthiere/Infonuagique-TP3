@@ -1,18 +1,19 @@
 parameters:
   environementIAC: 'dev'
   location: 'canadacentral'
-  resourceGroupName: ''
-  serviceConnection: ''
-
+  resourceGroupName: '' # Fournir le nom du groupe de ressources lors de l'utilisation du modèle
+  serviceConnection: '' # Fournir la connexion de service Azure DevOps lors de l'utilisation du modèle
 
 variables:
   templateFile: '**/main.bicep'
-  webAppName: 'webapp-${{ parameters.environementIAC}}-fgsdfg'
+  webAppName: 'webapp-${{ parameters.environementIAC }}-fgsdfg'
 
-pool:
-  vmImage: ubuntu-latest
+jobs:
+- job: 
+  pool:
+    vmImage: ubuntu-latest
 
-steps:
+  steps:
   - task: AzureCLI@2
     displayName: 'Environement ${{ parameters.environementIAC }}'
     inputs:
@@ -21,5 +22,5 @@ steps:
       scriptLocation: inlineScript
       inlineScript: |
         az --version
-        az group create --name ${{ parameters.resourceGroupName }} --location $(location)
+        az group create --name ${{ parameters.resourceGroupName }} --location ${{ parameters.location }}
         az deployment group create --resource-group ${{ parameters.resourceGroupName }} --template-file $(templateFile) --parameters appName=$(webAppName)
