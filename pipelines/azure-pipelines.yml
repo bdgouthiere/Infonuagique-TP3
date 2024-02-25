@@ -38,6 +38,25 @@ stages:
             az group create --name $(resourceGroupName) --location $(location)
             az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) --parameters appName=$(webAppName)
 
+- stage: 'IacProd'
+  jobs:
+    - job: 'Deployment'
+      variables:
+        resourceGroupName: 'rg-prod-tp3'
+        webAppName: 'app-prod-recrut-123'
+      steps:
+      - task: AzureCLI@2
+        displayName: 'Environement Prod'
+        inputs:
+          azureSubscription: $(serviceConnection)
+          scriptType: bash
+          scriptLocation: inlineScript
+          inlineScript: |
+            az --version
+            az group create --name $(resourceGroupName) --location $(location)
+            az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) --parameters appName=$(webAppName)
+
+
 
 #stages:
 #- stage: 'Dev'
