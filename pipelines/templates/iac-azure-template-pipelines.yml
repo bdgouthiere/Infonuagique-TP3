@@ -1,12 +1,13 @@
 parameters:
   environementIAC: 'dev'
   location: 'canadacentral'
+  resourceGroupName: ''
+  serviceConnection: ''
 
 
 variables:
   templateFile: '**/main.bicep'
   webAppName: 'webapp-${{ parameters.environementIAC}}-fgsdfg'
-
 
 pool:
   vmImage: ubuntu-latest
@@ -15,10 +16,10 @@ steps:
   - task: AzureCLI@2
     displayName: 'Environement ${{ parameters.environementIAC }}'
     inputs:
-      azureSubscription: $(serviceConnection)
+      azureSubscription: ${{ parameters.serviceConnection }}
       scriptType: bash
       scriptLocation: inlineScript
       inlineScript: |
         az --version
-        az group create --name $(resourceGroupName) --location $(location)
-        az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) --parameters appName=$(webAppName)
+        az group create --name ${{ parameters.resourceGroupName }} --location $(location)
+        az deployment group create --resource-group ${{ parameters.resourceGroupName }} --template-file $(templateFile) --parameters appName=$(webAppName)
