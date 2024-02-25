@@ -11,24 +11,34 @@ trigger:
     include:
       - bicep
 
-pool:
-  vmImage: ubuntu-latest
+stages:
+- stage: 'Dev'
+  displayName: 'IAC Dev'
+  jobs:
+  - template: templates/iac-azure-template-pipelines.yml
+    parameters:
+      environementIAC: 'dev'
+      resourceGroupName: 'rg-test-devops'
+      serviceConnection: 'az-serviceprincipal' 
 
-variables:
-  serviceConnection : 'az-serviceprincipal'
-  resourceGroupName: 'rg-test-devops'
-  location: 'canadacentral'
-  templateFile: '**/main.bicep'
-  webAppName: 'webapp-dev-fdafadafsfd'
+#pool:
+#  vmImage: ubuntu-latest
 
-steps:
-  - task: AzureCLI@2
-    displayName: 'Environement Dev'
-    inputs:
-      azureSubscription: $(serviceConnection)
-      scriptType: bash
-      scriptLocation: inlineScript
-      inlineScript: |
-        az --version
-        az group create --name $(resourceGroupName) --location $(location)
-        az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) --parameters appName=$(webAppName)
+#variables:
+#  serviceConnection : 'az-serviceprincipal'
+#  resourceGroupName: 'rg-test-devops'
+#  location: 'canadacentral'
+#  templateFile: '**/main.bicep'
+#  webAppName: 'webapp-dev-fdafadafsfd'
+
+#steps:
+#  - task: AzureCLI@2
+#    displayName: 'Environement Dev'
+#    inputs:
+#      azureSubscription: $(serviceConnection)
+#      scriptType: bash
+#      scriptLocation: inlineScript
+#      inlineScript: |
+#        az --version
+#        az group create --name $(resourceGroupName) --location $(location)
+#        az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) --parameters appName=$(webAppName)
