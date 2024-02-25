@@ -30,5 +30,5 @@ steps:
     inlineScript: |
       az --version
       az group create --name $(ressourceGroupName) --location $(location)
-      az deployement group create --resource-group $(ressourceGroupName) --template-file $(templateFile)
+      az deployment group create --resource-group $(ressourceGroupName) --template-file $(templateFile)
       parameters webAppName=$(webAppName)
