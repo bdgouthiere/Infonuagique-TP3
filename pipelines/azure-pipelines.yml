@@ -25,7 +25,6 @@ stages:
     - job: 'Deployment'
       variables:
         resourceGroupName: 'rg-dev-tp3'
-        #webAppName: 'app-dev-recrut-123'
       steps:
       - task: AzureCLI@2
         displayName: 'Environement Dev'
