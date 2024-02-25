@@ -3,6 +3,7 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+## Execution du pipelines si le fichier est modifier ou si fichier bicep/infra est modifier
 trigger:
 - main
 
