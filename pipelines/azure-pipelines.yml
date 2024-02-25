@@ -4,31 +4,56 @@
 # https://aka.ms/yaml
 
 ## Execution du pipelines si le fichier est modifier ou si fichier bicep/infra est modifier
-trigger:
-  - none
+#trigger:
+#  - none
   ##branches:
   ##  include:
   ##    - bicep/infra
 
 
+#pool:
+#  vmImage: ubuntu-latest
+
+#variables:
+#  serviceConnection: 'az-serviceprincipal'
+#  resourceGroupName: 'rg-test-devops'
+#  location: 'canadacentral'
+#  templateFile: '**/main.bicep'
+#  webAppName: 'webapp-dev-7845112'
+
+#steps:
+#- task: AzureCLI@2
+#  inputs:
+#    azureSubscription: $(serviceConnection)
+#    scriptType: bash
+#    scriptLocation: inlineScript
+#    inlineScript: |
+#      az --version
+#      az group create --name $(resourceGroupName) --location $(location)
+#      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile)
+#      parameters webAppName=$(webAppName)
+
+
+trigger:
+- none
+
 pool:
   vmImage: ubuntu-latest
 
 variables:
-  serviceConnection: 'az-serviceprincipal'
+  serviceConnection : 'az-serviceprincipal'
   resourceGroupName: 'rg-test-devops'
   location: 'canadacentral'
   templateFile: '**/main.bicep'
-  webAppName: 'webapp-dev-7845112'
+  webAppName: 'webapp-dev-fdafadafsfd'
 
 steps:
-- task: AzureCLI@2
-  inputs:
-    azureSubscription: $(serviceConnection)
-    scriptType: bash
-    scriptLocation: inlineScript
-    inlineScript: |
-      az --version
-      az group create --name $(resourceGroupName) --location $(location)
-      az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile)
-      parameters webAppName=$(webAppName)
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: $(serviceConnection)
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        az --version
+        az group create --name $(resourceGroupName) --location $(location)
+        az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile) --parameters appName=$(webAppName)
