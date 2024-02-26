@@ -24,13 +24,14 @@ stages:
       artifactName: $(artifactName)
 
 
-#- stage : 'DeployToDev' 
-#  displayName: 'Déploiment en Dev'
-#  dependsOn: 'Build'
-#  jobs:
-#  - template: pipelines/templates/deploy-template.yml
-#    parameters:
-#      environment: $(environment)
-#      artifactName: $(artifactName)
-#      serviceConnection: $(serviceConnection)
-#      webAppName: $(webAppName)
+- stage : 'DeployToDevPostulations' 
+  displayName: 'Déploiment en Dev'
+  dependsOn: 'Build'
+  jobs:
+  - template: pipelines/templates/deploy-template.yml
+    parameters:
+      environment: 'dev'
+      artifactName: $(artifactName)
+      package: 'ModernRecrut.Postulation.API.zip'
+      serviceConnection: $(serviceConnection)
+      webAppName: 'webapp-postulation-to6vosiht4kea'
