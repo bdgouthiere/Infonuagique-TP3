@@ -16,7 +16,7 @@ pool:
 
 variables:
   location: 'canadacentral'
-  templateFile: '**/main.bicep'
+#  templateFile: '**/main.bicep'
   serviceConnection: 'sc-azure'
 
 stages:
@@ -30,6 +30,7 @@ stages:
       environment: dev
       variables:
         resourceGroupName: 'rg-dev-tp3-test'
+        templateFile: '**/main.bicep'
       strategy:
         runOnce:
           deploy:
