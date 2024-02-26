@@ -4,16 +4,33 @@
 # https://aka.ms/yaml
 
 trigger:
-- main
+- none
 
-pool:
-  vmImage: ubuntu-latest
+variables:
+  buildConfiguration: 'Release'
+  serviceConnection : 'sc-azure'
+  artifactName: 'drop'
+  environment: 'dev'
+  webAppName: 'webapp-h22-dev-122'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+stages:
+- stage : 'Build' 
+  displayName: 'Build et execution des tests'
+  jobs:
+  - template: pipelines/templates/build-template.yml
+    parameters:
+      buildConfiguration: $(buildConfiguration)
+      artifactName: $(artifactName)
+
+
+- stage : 'DeployToDev' 
+  displayName: 'Déploiment en Dev'
+  dependsOn: 'Build'
+  jobs:
+  - template: pipelines/templates/deploy-template.yml
+    parameters:
+      environment: $(environment)
+      artifactName: $(artifactName)
+      serviceConnection: $(serviceConnection)
+      webAppName: $(webAppName)
