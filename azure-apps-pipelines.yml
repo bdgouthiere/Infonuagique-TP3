@@ -15,7 +15,7 @@ variables:
 
 
 stages:
-- stage : 'Build' 
+- stage : 'Build'
   displayName: 'Build et execution des tests'
   jobs:
   - template: pipelines/templates/build-template.yml
@@ -24,13 +24,13 @@ stages:
       artifactName: $(artifactName)
 
 
-- stage : 'DeployToDev' 
-  displayName: 'Déploiment en Dev'
-  dependsOn: 'Build'
-  jobs:
-  - template: pipelines/templates/deploy-template.yml
-    parameters:
-      environment: $(environment)
-      artifactName: $(artifactName)
-      serviceConnection: $(serviceConnection)
-      webAppName: $(webAppName)
+#- stage : 'DeployToDev' 
+#  displayName: 'Déploiment en Dev'
+#  dependsOn: 'Build'
+#  jobs:
+#  - template: pipelines/templates/deploy-template.yml
+#    parameters:
+#      environment: $(environment)
+#      artifactName: $(artifactName)
+#      serviceConnection: $(serviceConnection)
+#      webAppName: $(webAppName)
