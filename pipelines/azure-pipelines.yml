@@ -21,35 +21,43 @@ variables:
 
 stages:
 - stage: 'IacDev'
+  displayName: 'Deploy the Dev Iac'
   jobs:
-    - job: 'Deployment'
+    - deployment: Deploy
+      
+      pool:
+        vmImage: 'ubuntu-20.04'
+      environment: dev
       variables:
-        resourceGroupName: 'rg-dev-tp3'
-      steps:
-      - task: AzureCLI@2
-        displayName: 'Environement Dev'
-        inputs:
-          azureSubscription: $(serviceConnection)
-          scriptType: bash
-          scriptLocation: inlineScript
-          inlineScript: |
-            az --version
-            az group create --name $(resourceGroupName) --location $(location)
-            az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile)
+        resourceGroupName: 'rg-dev-tp3-test'
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - task: AzureCLI@2
+              displayName: 'Environement Dev'
+              inputs:
+                azureSubscription: $(serviceConnection)
+                scriptType: bash
+                scriptLocation: inlineScript
+                inlineScript: |
+                  az --version
+                  az group create --name $(resourceGroupName) --location $(location)
+                  az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile)
 
-- stage: 'IacProd'
-  jobs:
-    - job: 'Deployment'
-      variables:
-        resourceGroupName: 'rg-prod-tp3'
-      steps:
-      - task: AzureCLI@2
-        displayName: 'Environement Prod'
-        inputs:
-          azureSubscription: $(serviceConnection)
-          scriptType: bash
-          scriptLocation: inlineScript
-          inlineScript: |
-            az --version
-            az group create --name $(resourceGroupName) --location $(location)
-            az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile)
+#- stage: 'IacProd'
+#  jobs:
+#    - job: 'Deployment'
+#      variables:
+#        resourceGroupName: 'rg-prod-tp3'
+#      steps:
+#      - task: AzureCLI@2
+#        displayName: 'Environement Prod'
+#        inputs:
+#          azureSubscription: $(serviceConnection)
+#          scriptType: bash
+#          scriptLocation: inlineScript
+#          inlineScript: |
+#            az --version
+#            az group create --name $(resourceGroupName) --location $(location)
+#            az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile)
