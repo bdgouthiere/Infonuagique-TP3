@@ -32,6 +32,6 @@ stages:
     parameters:
       environment: 'dev'
       artifactName: $(artifactName)
-      package: 'ModernRecrut.Postulation.API.zip'
+      packageName: 'ModernRecrut.Postulation.API.zip'
       serviceConnection: $(serviceConnection)
       webAppName: 'webapp-postulation-to6vosiht4kea'
