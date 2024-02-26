@@ -20,38 +20,38 @@ stages:
       buildConfiguration: $(buildConfiguration)
       artifactName: $(artifactName)
 
-
+## Deploiement en Dev
 - stage : 'DeployToDevDocuments' 
-  displayName: 'Déploiment en Dev API Docuements'
+  displayName: 'Déploiement en Dev API Documents'
   dependsOn: 'Build'
   jobs:
   - template: pipelines/templates/deploy-template.yml
     parameters:
-      environment: 'dev'
+      environment: 'Dev'
       artifactName: $(artifactName)
       packageName: 'ModernRecrut.Documents.API.zip'
       serviceConnection: $(serviceConnection)
       webAppName: 'webapp-documents-to6vosiht4kea'
 
 - stage : 'DeployToDevEmplois' 
-  displayName: 'Déploiment en Dev API Emplois'
+  displayName: 'Déploiement en Dev API Emplois'
   dependsOn: 'Build'
   jobs:
   - template: pipelines/templates/deploy-template.yml
     parameters:
-      environment: 'dev'
+      environment: 'Dev'
       artifactName: $(artifactName)
       packageName: 'ModernRecrut.Emplois.API.zip'
       serviceConnection: $(serviceConnection)
       webAppName: 'webapp-emplois-to6vosiht4kea'
 
 - stage : 'DeployToDevFavoris' 
-  displayName: 'Déploiment en Dev API Favoris'
+  displayName: 'Déploiement en Dev API Favoris'
   dependsOn: 'Build'
   jobs:
   - template: pipelines/templates/deploy-template.yml
     parameters:
-      environment: 'dev'
+      environment: 'Dev'
       artifactName: $(artifactName)
       packageName: 'ModernRecrut.Favoris.API.zip'
       serviceConnection: $(serviceConnection)
@@ -59,19 +59,19 @@ stages:
 
 
 - stage : 'DeployToDevPostulations' 
-  displayName: 'Déploiment en Dev API Postulations'
+  displayName: 'Déploiement en Dev API Postulations'
   dependsOn: 'Build'
   jobs:
   - template: pipelines/templates/deploy-template.yml
     parameters:
-      environment: 'dev'
+      environment: 'Dev'
       artifactName: $(artifactName)
       packageName: 'ModernRecrut.Postulation.API.zip'
       serviceConnection: $(serviceConnection)
       webAppName: 'webapp-postulation-to6vosiht4kea'
 
 - stage : 'DeployToDevMVC' 
-  displayName: 'Déploiment en Dev MVC'
+  displayName: 'Déploiement en Dev MVC'
   dependsOn:
     - 'Build'
     - 'DeployToDevDocuments'
@@ -81,9 +81,75 @@ stages:
   jobs:
   - template: pipelines/templates/deploy-template.yml
     parameters:
-      environment: 'dev'
+      environment: 'Dev'
       artifactName: $(artifactName)
       packageName: 'ModernRecrut.MVC.zip'
       serviceConnection: $(serviceConnection)
       webAppName: 'webapp-mvc-to6vosiht4kea'
-## Production
+
+## Deploiement en Production
+- stage : 'DeployToProductionDocuments' 
+  displayName: 'Déploiement en Production API Documents'
+  dependsOn: 'DeployToDevMVC'
+  jobs:
+  - template: pipelines/templates/deploy-template.yml
+    parameters:
+      environment: 'Production'
+      artifactName: $(artifactName)
+      packageName: 'ModernRecrut.Documents.API.zip'
+      serviceConnection: $(serviceConnection)
+      webAppName: 'webapp-documents-cbw7hsdswfm44'
+
+- stage : 'DeployToProductionEmplois' 
+  displayName: 'Déploiement en Production API Emplois'
+  dependsOn: 'DeployToDevMVC'
+  jobs:
+  - template: pipelines/templates/deploy-template.yml
+    parameters:
+      environment: 'Production'
+      artifactName: $(artifactName)
+      packageName: 'ModernRecrut.Emplois.API.zip'
+      serviceConnection: $(serviceConnection)
+      webAppName: 'webapp-emplois-cbw7hsdswfm44'
+
+- stage : 'DeployToProductionFavoris' 
+  displayName: 'Déploiement en Production API Favoris'
+  dependsOn: 'DeployToDevMVC'
+  jobs:
+  - template: pipelines/templates/deploy-template.yml
+    parameters:
+      environment: 'Production'
+      artifactName: $(artifactName)
+      packageName: 'ModernRecrut.Favoris.API.zip'
+      serviceConnection: $(serviceConnection)
+      webAppName: 'webapp-favoris-cbw7hsdswfm44'
+
+
+- stage : 'DeployToProductionPostulations' 
+  displayName: 'Déploiement en Production API Postulations'
+  dependsOn: 'DeployToDevMVC'
+  jobs:
+  - template: pipelines/templates/deploy-template.yml
+    parameters:
+      environment: 'Production'
+      artifactName: $(artifactName)
+      packageName: 'ModernRecrut.Postulation.API.zip'
+      serviceConnection: $(serviceConnection)
+      webAppName: 'webapp-postulation-cbw7hsdswfm44'
+
+- stage : 'DeployToProductionMVC' 
+  displayName: 'Déploiement en Production MVC'
+  dependsOn:
+    - 'DeployToDevMVC'
+    - 'DeployToProductionDocuments'
+    - 'DeployToProductionEmplois'
+    - 'DeployToProductionFavoris'
+    - 'DeployToProductionPostulations'
+  jobs:
+  - template: pipelines/templates/deploy-template.yml
+    parameters:
+      environment: 'Production'
+      artifactName: $(artifactName)
+      packageName: 'ModernRecrut.MVC.zip'
+      serviceConnection: $(serviceConnection)
+      webAppName: 'webapp-mvc-cbw7hsdswfm44'
