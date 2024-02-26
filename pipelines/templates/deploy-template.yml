@@ -3,6 +3,8 @@ parameters:
     artifactName: ''
     serviceConnection: ''
     webAppName: 'test110'
+    packageName: ''
+
 
 jobs:
 - deployment : 'WebDeploy'
@@ -25,4 +27,4 @@ jobs:
               azureSubscription: '${{ parameters.serviceConnection }}'
               appType: 'webApp'
               WebAppName: '${{ parameters.webAppName }}'
-              package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+              package: '$(Build.ArtifactStagingDirectory)/**/${{ parameters.packageName}}'
