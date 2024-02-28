@@ -22,37 +22,41 @@ variables:
 stages:
 - stage: 'IacDev'
   jobs:
-    - job: 'Deployment'
-      variables:
-        resourceGroupName: 'rg-dev-tp3'
-      steps:
-      - task: AzureCLI@2
-        displayName: 'Environement Dev'
-        inputs:
-          azureSubscription: $(serviceConnection)
-          scriptType: bash
-          scriptLocation: inlineScript
-          inlineScript: |
-            az --version
-            az group create --name $(resourceGroupName) --location $(location)
-            az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile)
+  - deployment: 'DeployToDev'
+    environment: 'Dev'
+  - job: 'Deployment'
+    variables:
+      resourceGroupName: 'rg-dev-tp3'
+    steps:
+    - task: AzureCLI@2
+      displayName: 'Environement Dev'
+      inputs:
+        azureSubscription: $(serviceConnection)
+        scriptType: bash
+        scriptLocation: inlineScript
+        inlineScript: |
+          az --version
+          az group create --name $(resourceGroupName) --location $(location)
+          az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile)
 
 - stage: 'IacProd'
   jobs:
-    - job: 'Deployment'
-      variables:
-        resourceGroupName: 'rg-prod-tp3'
-      steps:
-      - task: AzureCLI@2
-        displayName: 'Environement Production'
-        inputs:
-          azureSubscription: $(serviceConnection)
-          scriptType: bash
-          scriptLocation: inlineScript
-          inlineScript: |
-            az --version
-            az group create --name $(resourceGroupName) --location $(location)
-            az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile)
+  - deployment: 'DeployToProduction'
+    environment: 'Production'
+  - job: 'Deployment'
+    variables:
+      resourceGroupName: 'rg-prod-tp3'
+    steps:
+    - task: AzureCLI@2
+      displayName: 'Environement Production'
+      inputs:
+        azureSubscription: $(serviceConnection)
+        scriptType: bash
+        scriptLocation: inlineScript
+        inlineScript: |
+          az --version
+          az group create --name $(resourceGroupName) --location $(location)
+          az deployment group create --resource-group $(resourceGroupName) --template-file $(templateFile)
 
 ##### Environnement !!!
 #stages:
