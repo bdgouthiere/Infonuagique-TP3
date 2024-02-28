@@ -140,7 +140,6 @@ stages:
 - stage : 'DeployToProductionMVC' 
   displayName: 'Déploiement en Production MVC'
   dependsOn:
-    - 'DeployToDevMVC'
     - 'DeployToProductionDocuments'
     - 'DeployToProductionEmplois'
     - 'DeployToProductionFavoris'
