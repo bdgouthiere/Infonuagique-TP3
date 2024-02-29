@@ -33,6 +33,8 @@ stages:
 
 - stage: 'Deploy'
   displayName: 'Déploiement vers Azure Container Instances'
+  variables:
+    username: 'acrtp3q4'
   jobs:
   - job: 'Deploy'
     steps:
