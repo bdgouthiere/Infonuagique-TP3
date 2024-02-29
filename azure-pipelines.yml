@@ -35,6 +35,7 @@ stages:
 
 - stage: 'Deploy'
   displayName: 'Déploiement vers Azure Container Instances'
+  dependsOn: 'Build'
   variables:
     username: 'acrtp3q4'
     aciDnsLabel: 'acimodermrecrutemploi123'
