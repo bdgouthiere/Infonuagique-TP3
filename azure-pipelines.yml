@@ -10,9 +10,10 @@ variables:
   serviceConnection: 'sc-azure'
   containerRegistry: 'acrtp3q4.azurecr.io'
   acrServiceConnection: 'sc-container-registry'
-  imageRepository: 'emploiapiconteneur'
+  imageRepository: 'emploiapirepositoy'
   dockerfilePath: '**/Dockerfile'
   ressourceGroup: "rg-tp3-q4"
+  containerName: "emploiapicontainer"
   tag: '$(Build.BuildId)'
 
 stages:
@@ -52,7 +53,7 @@ stages:
           #az group create --name MyResourceGroup --location eastus
 
           # Créer un conteneur à partir de l'image
-          az container create --resource-group MyResourceGroup --name mycontainer --image $imageUri --cpu 1 --memory 1.5Gi --registry-login-server $(containerRegistry) --registry-username $(acrServiceConnection) --registry-password $(acrServiceConnection)
+          az container create --resource-group $(ressourceGroup) --name $(emploiapicontainer) --image $imageUri --cpu 1 --memory 1.5Gi --registry-login-server $(containerRegistry) --registry-username $(username) --registry-password $(PASSWORD)
 
           # Afficher l'adresse IP publique du conteneur
           #az container show --resource-group MyResourceGroup --name mycontainer --query ipAddress.ip --output tsv
