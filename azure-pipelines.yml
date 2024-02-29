@@ -9,8 +9,8 @@ trigger:
 variables:
   serviceConnection: 'sc-azure'
   containerRegistry: 'acrtp3q4.azurecr.io'
-  acrServiceConnection: 'sc-acr'
-  imageRepository: 'emploiapi'
+  acrServiceConnection: 'sc-container-registry'
+  imageRepository: 'emploiapiconteneur'
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
 
