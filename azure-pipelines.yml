@@ -18,7 +18,7 @@ stages:
 - stage: 'Build'
   displayName: 'Generation et push image'
   pool:
-    vmImage: 'ubuntu-lastet'
+    vmImage: 'ubuntu-latest'
   jobs:
   - job: 'Build'
     steps:
