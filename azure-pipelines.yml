@@ -15,6 +15,23 @@ variables:
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
 
+stages:
+- stage: 'Build'
+  displayName: 'Generation et push image'
+  pool:
+    vmImage: 'ubuntu-lastet'
+  jobs:
+  - job: 'Build'
+    steps:
+    - task: Docker@2
+      inputs:
+        containerRegistry: '$(acrServiceConnection)'
+        repository: '$(imageRepository)'
+        command: 'buildAndPush'
+        Dockerfile: '$(dockerfilePath)'
+        buildContext: '$(Build.SourceDirectory)'
+      displayName: 'Génération et push image dans registre de conteneurs'
+
 
 
 #pool:
