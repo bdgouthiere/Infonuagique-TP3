@@ -8,7 +8,7 @@ trigger:
 
 variables:
   serviceConnection: 'sc-azure'
-  appName: 'az-webapp-docker123'
+  #appName: ''
   containerRegistry: 'acrtp3q4.azurecr.io'
   acrServiceConnection: 'sc-acr'
   imageRepository: 'emploiapi'
