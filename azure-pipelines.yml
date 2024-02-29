@@ -6,6 +6,12 @@
 trigger:
 - none
 
+variables:
+  serviceConnection: 'sc-azure'
+  appName: 'az-webapp-docker'
+  containerRegistry: 'rg-tp3-q4'
+
+
 #pool:
 #  vmImage: ubuntu-latest
 
