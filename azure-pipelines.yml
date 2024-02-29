@@ -31,7 +31,29 @@ stages:
         buildContext: '$(Build.SourcesDirectory)'
       displayName: 'Génération et push image dans registre de conteneurs'
 
+- stage: 'Deploy'
+  displayName: 'Déploiement vers Azure Container Instances'
+  jobs:
+  - job: 'Deploy'
+    steps:
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: '$(serviceConnection)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          # Récupérer les informations de l'image depuis le registre de conteneurs
+          imageUri=$(az acr repository show-tags --name $(containerRegistry) --repository $(imageRepository) --output tsv --query '[0].tags[0]')
+          
+          # Créer un groupe de ressources pour ACI
+          #az group create --name MyResourceGroup --location eastus
 
+          # Créer un conteneur à partir de l'image
+          az container create --resource-group MyResourceGroup --name mycontainer --image $imageUri --cpu 1 --memory 1.5Gi --registry-login-server $(containerRegistry) --registry-username $(acrServiceConnection) --registry-password $(acrServiceConnection)
+
+          # Afficher l'adresse IP publique du conteneur
+          #az container show --resource-group MyResourceGroup --name mycontainer --query ipAddress.ip --output tsv
+    displayName: 'Déploiement vers Azure Container Instances'
 
 #pool:
 #  vmImage: ubuntu-latest
