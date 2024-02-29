@@ -12,6 +12,7 @@ variables:
   acrServiceConnection: 'sc-container-registry'
   imageRepository: 'emploiapiconteneur'
   dockerfilePath: '**/Dockerfile'
+  ressourceGroup: "rg-tp3-q4"
   tag: '$(Build.BuildId)'
 
 stages:
