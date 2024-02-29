@@ -8,7 +8,6 @@ trigger:
 
 variables:
   serviceConnection: 'sc-azure'
-  #appName: ''
   containerRegistry: 'acrtp3q4.azurecr.io'
   acrServiceConnection: 'sc-acr'
   imageRepository: 'emploiapi'
