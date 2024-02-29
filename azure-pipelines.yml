@@ -53,7 +53,8 @@ stages:
           #az group create --name MyResourceGroup --location eastus
 
           # Créer un conteneur à partir de l'image
-          az container create --resource-group $(ressourceGroup) --name $(containerName) --image $imageUri --cpu 1 --memory 1.5Gi --registry-login-server $(containerRegistry) --registry-username $(username) --registry-password $(PASSWORD)
+          #az container create --resource-group $(ressourceGroup) --name $(containerName) --image $imageUri --cpu 1 --memory 1.5Gi --registry-login-server $(containerRegistry) --registry-username $(username) --registry-password $(PASSWORD)
+          az container create --resource-group $(ressourceGroup) --name $(containerName) --image $(containerRegistry)/$(imageRepository):$(tag) --cpu 1 --memory 1.5Gi --registry-login-server $(containerRegistry) --registry-username $(username) --registry-password $(PASSWORD)
 
           # Afficher l'adresse IP publique du conteneur
           #az container show --resource-group MyResourceGroup --name mycontainer --query ipAddress.ip --output tsv
